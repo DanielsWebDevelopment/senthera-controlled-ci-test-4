@@ -1,39 +1,32 @@
-  name: Senthera Controlled CI
- 
- 
-     on:
-       pull_request:
-         branches:
-           - main
- 
- 
-     permissions:
-       contents: read
- 
- 
-     jobs:
-       controlled-check:
-         name: Controlled PR check
-         runs-on: ubuntu-latest
- 
- 
-         steps:
-           - name: Check out repository
-             uses: actions/checkout@v6
- 
- 
-           - name: Keep check pending briefly
-             shell: bash
-             run: sleep 60
- 
- 
-           - name: Run controlled check
-             shell: bash
-             run: |
-               if [[ -f .senthera-ci-fail ]]; then
-                 echo "Controlled failure marker found."
-                 exit 1
-               fi
- 
- 
-               echo "Controlled check passed."
+name: Senthera Controlled CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-check:
+    name: Controlled PR check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Keep check pending briefly
+        shell: bash
+        run: sleep 60
+
+      - name: Run controlled check
+        shell: bash
+        run: |
+          if [[ -f .senthera-ci-fail ]]; then
+            echo "Controlled failure marker found."
+            exit 1
+          fi
+
+          echo "Controlled check passed."
